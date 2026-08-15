@@ -41,6 +41,10 @@ class PoseRepositoryImpl implements PoseRepository {
 
   @override
   Future<Pose> toggleFavorite(Pose pose) async {
+    if (pose.source != PoseSource.user) {
+      return pose;
+    }
+
     final updatedPose = PoseModel(
       id: pose.id,
       imagePath: pose.imagePath,
@@ -48,9 +52,7 @@ class PoseRepositoryImpl implements PoseRepository {
       isFavorite: !pose.isFavorite,
     );
 
-    if (pose.source == PoseSource.user) {
-      await _localDataSource.updateUserPose(updatedPose);
-    }
+    await _localDataSource.updateUserPose(updatedPose);
 
     return updatedPose;
   }

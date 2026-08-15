@@ -46,4 +46,41 @@ abstract final class AppTexts {
   static const String deleting = 'Siliniyor...';
 
   static const String poseNotFound = 'Poz bulunamadı.';
+
+  //favorites
+  static const String emptyFavoritesTitle = 'Henüz favori pozun yok';
+
+  static const String emptyFavoritesDescription =
+      'Beğendiğin pozları favorilerine ekleyerek burada görebilirsin.';
+
+  //settings
+  static const String aboutSection = 'HAKKINDA';
+
+  static const String aboutPoseMatch = 'PoseMatch Hakkında';
+
+  static const String privacyPolicy = 'Gizlilik Politikası';
+
+  static const String termsOfUse = 'Kullanım Koşulları';
+
+  static const String aboutPoseMatchDescription =
+      'PoseMatch, seçtiğin referans pozu kullanarak benzer bir pozu daha kolay yakalamanı sağlayan bir fotoğraf çekim yardımcısıdır. Referans görselini seçebilir, kamera üzerinde hizalanabilir ve çektiğin fotoğrafı kaydedebilirsin.\n\n'
+      'Uygulama: PoseMatch\n'
+      'Sürüm: 1.0.0';
+
+  static const String privacyPolicyDescription =
+      'PoseMatch, temel işlevlerini cihaz üzerinde çalıştıracak şekilde tasarlanmıştır. Seçtiğin fotoğraflar ve oluşturduğun pozlar uygulamanın çalışması için cihazında kullanılabilir.';
+
+  static const String termsOfUseDescription =
+      'PoseMatch kullanılarak seçilen, oluşturulan veya paylaşılan içeriklerin kullanımından kullanıcı sorumludur. Uygulamayı kullanırken üçüncü kişilerin haklarına ve yürürlükteki kurallara uygun hareket edilmelidir.';
+
+  static const String appVersion = 'Sürüm 1.0.0';
+
+  // Camera
+  static const String backToCamera = 'Kameraya dön';
+  static const String savePhoto = 'Kaydet';
+  static const String photoCouldNotBeDisplayed = 'Fotoğraf görüntülenemedi.';
+  static const String photoSavedToGallery = 'Galeriye kaydedildi';
+  static const String photoCouldNotBeSaved = 'Kaydedilemedi, tekrar dene';
+  static const String cameraInitializationError =
+      'Kamera başlatılırken bir hata oluştu.';
 }

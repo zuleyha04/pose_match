@@ -17,4 +17,5 @@ abstract final class AppRoutes {
 
   static const String camera = '/camera';
   static const String cameraResult = '/camera/result';
+  static const String capturedPhoto = '/camera/captured-photo';
 }

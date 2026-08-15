@@ -81,4 +81,41 @@ abstract final class AppTransitions {
       },
     );
   }
+
+  static CustomTransitionPage poseDetail({
+    required GoRouterState state,
+    required Widget child,
+  }) {
+    return CustomTransitionPage(
+      key: state.pageKey,
+      transitionDuration: const Duration(milliseconds: 320),
+      reverseTransitionDuration: const Duration(milliseconds: 220),
+      child: child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+          reverseCurve: Curves.easeInCubic,
+        );
+
+        final slideAnimation = Tween<Offset>(
+          begin: const Offset(0, 0.025),
+          end: Offset.zero,
+        ).animate(curvedAnimation);
+
+        final scaleAnimation = Tween<double>(
+          begin: 0.95,
+          end: 1,
+        ).animate(curvedAnimation);
+
+        return FadeTransition(
+          opacity: curvedAnimation,
+          child: SlideTransition(
+            position: slideAnimation,
+            child: ScaleTransition(scale: scaleAnimation, child: child),
+          ),
+        );
+      },
+    );
+  }
 }

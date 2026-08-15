@@ -11,7 +11,7 @@ class PoseLocalDataSource {
   final SharedPreferencesAsync _preferences;
 
   Future<List<PoseModel>> getRecommendedPoses() async {
-    const poses = [
+    final poses = [
       PoseModel(
         id: 'recommended_1',
         imagePath: AppConstants.recommendedPose1Path,
@@ -27,8 +27,52 @@ class PoseLocalDataSource {
         imagePath: AppConstants.recommendedPose3Path,
         source: PoseSource.recommended,
       ),
+      PoseModel(
+        id: 'recommended_4',
+        imagePath: AppConstants.recommendedPose4Path,
+        source: PoseSource.recommended,
+      ),
+      PoseModel(
+        id: 'recommended_5',
+        imagePath: AppConstants.recommendedPose5Path,
+        source: PoseSource.recommended,
+      ),
+      PoseModel(
+        id: 'recommended_6',
+        imagePath: AppConstants.recommendedPose6Path,
+        source: PoseSource.recommended,
+      ),
+      PoseModel(
+        id: 'recommended_7',
+        imagePath: AppConstants.recommendedPose7Path,
+        source: PoseSource.recommended,
+      ),
+      PoseModel(
+        id: 'recommended_8',
+        imagePath: AppConstants.recommendedPose8Path,
+        source: PoseSource.recommended,
+      ),
+      PoseModel(
+        id: 'recommended_9',
+        imagePath: AppConstants.recommendedPose9Path,
+        source: PoseSource.recommended,
+      ),
+      PoseModel(
+        id: 'recommended_10',
+        imagePath: AppConstants.recommendedPose10Path,
+        source: PoseSource.recommended,
+      ),
+      PoseModel(
+        id: 'recommended_11',
+        imagePath: AppConstants.recommendedPose11Path,
+        source: PoseSource.recommended,
+      ),
+      PoseModel(
+        id: 'recommended_12',
+        imagePath: AppConstants.recommendedPose12Path,
+        source: PoseSource.recommended,
+      ),
     ];
-
     await Future.wait(poses.map((pose) => rootBundle.load(pose.imagePath)));
 
     return poses;

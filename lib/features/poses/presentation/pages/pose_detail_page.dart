@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pose_match/app/router/app_routes.dart';
+import 'package:pose_match/features/camera/data/models/camera_overlay_data.dart';
 import 'package:provider/provider.dart';
 import 'package:pose_match/app/theme/app_colors.dart';
 import 'package:pose_match/core/constants/app_texts.dart';
@@ -67,12 +70,12 @@ class _PosePreview extends StatelessWidget {
             },
           ),
         ),
-
-        Positioned(
-          top: topPadding + 15,
-          right: 16,
-          child: _FavoriteButton(pose: pose),
-        ),
+        if (pose.source == PoseSource.user)
+          Positioned(
+            top: topPadding + 15,
+            right: 16,
+            child: _FavoriteButton(pose: pose),
+          ),
       ],
     );
   }
@@ -85,10 +88,26 @@ class _PoseImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pixelRatio = MediaQuery.devicePixelRatioOf(context);
+
+    final screenWidth = MediaQuery.sizeOf(context).width;
+
+    final cacheWidth = (screenWidth * pixelRatio).round();
+
     if (pose.source == PoseSource.user) {
       return Image.file(
         File(pose.imagePath),
+        width: double.infinity,
+        height: double.infinity,
         fit: BoxFit.cover,
+        cacheWidth: cacheWidth,
+        frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+          if (wasSynchronouslyLoaded || frame != null) {
+            return child;
+          }
+
+          return const _PoseDetailImageLoading();
+        },
         errorBuilder: (context, error, stackTrace) {
           return const _ImageErrorState();
         },
@@ -97,10 +116,33 @@ class _PoseImage extends StatelessWidget {
 
     return Image.asset(
       pose.imagePath,
+      width: double.infinity,
+      height: double.infinity,
       fit: BoxFit.cover,
+      cacheWidth: cacheWidth,
       errorBuilder: (context, error, stackTrace) {
         return const _ImageErrorState();
       },
+    );
+  }
+}
+
+class _PoseDetailImageLoading extends StatelessWidget {
+  const _PoseDetailImageLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: AppColors.background,
+      child: const Center(
+        child: SizedBox.square(
+          dimension: 30,
+          child: CircularProgressIndicator(
+            strokeWidth: 2.5,
+            color: AppColors.primary,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -190,7 +232,7 @@ class _PoseActions extends StatelessWidget {
         final buttonHeight = (constraints.maxHeight * 0.30).clamp(48.0, 54.0);
 
         return Padding(
-          padding: const EdgeInsets.fromLTRB(20, 14, 20, 16),
+          padding: const EdgeInsets.fromLTRB(40, 14, 40, 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -199,11 +241,18 @@ class _PoseActions extends StatelessWidget {
                 height: buttonHeight,
                 child: FilledButton(
                   onPressed: () {
-                    // Camera feature bağlandığında
-                    // seçilen poseId buradan aktarılacak.
+                    context.push(
+                      AppRoutes.camera,
+                      extra: CameraOverlayData(
+                        imagePath: pose.imagePath,
+                        source: pose.source == PoseSource.user
+                            ? CameraOverlaySource.file
+                            : CameraOverlaySource.asset,
+                      ),
+                    );
                   },
                   style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.primary,
+                    backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(

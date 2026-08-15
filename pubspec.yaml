@@ -41,7 +41,8 @@ dependencies:
   get_it: ^9.2.1
   image_picker: ^1.2.3
   lottie: ^3.5.1
-
+  camera: ^0.12.0+2
+  gal: ^2.3.3
 
 
 dev_dependencies:
@@ -54,6 +55,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -70,6 +73,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/onboarding/
+    - assets/images/recommend/
     - assets/animations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -97,3 +101,16 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_launcher_icons:
+  android: "pose_match_icon"
+  ios: false
+
+  image_path: "assets/images/logo.png"
+
+  adaptive_icon_background: "#EAB012"
+  adaptive_icon_foreground: "assets/images/logo_foreground.png"
+  adaptive_icon_foreground_inset: 20
+
+  min_sdk_android: 21
+

@@ -66,17 +66,26 @@ class _PoseImage extends StatelessWidget {
         );
 
       case PoseSource.user:
-        return Image.file(
-          File(pose.imagePath),
-          width: double.infinity,
-          height: double.infinity,
-          fit: BoxFit.cover,
-          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-            if (wasSynchronouslyLoaded || frame != null) {
-              return child;
-            }
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final pixelRatio = MediaQuery.devicePixelRatioOf(context);
 
-            return const _PoseImageLoading();
+            final cacheWidth = (constraints.maxWidth * pixelRatio).round();
+
+            return Image.file(
+              File(pose.imagePath),
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.cover,
+              cacheWidth: cacheWidth,
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded || frame != null) {
+                  return child;
+                }
+
+                return const _PoseImageLoading();
+              },
+            );
           },
         );
     }

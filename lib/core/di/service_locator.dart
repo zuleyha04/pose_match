@@ -1,4 +1,11 @@
 import 'package:get_it/get_it.dart';
+import 'package:pose_match/features/camera/data/datasources/camera_local_data_source.dart';
+import 'package:pose_match/features/camera/data/repositories/camera_repository_impl.dart';
+import 'package:pose_match/features/camera/domain/repositories/camera_repository.dart';
+import 'package:pose_match/features/camera/domain/usecases/get_available_cameras_usecase.dart';
+import 'package:pose_match/features/camera/domain/usecases/save_photo_to_gallery_usecase.dart';
+import 'package:pose_match/features/camera/presentation/stores/camera_store.dart';
+import 'package:pose_match/features/camera/presentation/stores/captured_photo_store.dart';
 import 'package:pose_match/features/home/data/datasources/home_banner_local_data_source.dart';
 import 'package:pose_match/features/home/data/repositories/home_banner_repository_impl.dart';
 import 'package:pose_match/features/home/domain/repositories/home_banner_repository.dart';
@@ -22,6 +29,7 @@ Future<void> setupServiceLocator() async {
   _registerCoreDependencies();
   _registerHomeDependencies();
   _registerPoseDependencies();
+  _registerCameraDependencies();
 }
 
 void _registerCoreDependencies() {
@@ -98,5 +106,30 @@ void _registerPoseDependencies() {
 
   sl.registerLazySingleton<DeletePoseUseCase>(
     () => DeletePoseUseCase(sl<PoseRepository>()),
+  );
+}
+
+void _registerCameraDependencies() {
+  sl.registerLazySingleton<CameraLocalDataSource>(
+    () => CameraLocalDataSourceImpl(),
+  );
+
+  sl.registerLazySingleton<CameraRepository>(
+    () => CameraRepositoryImpl(sl<CameraLocalDataSource>()),
+  );
+
+  sl.registerLazySingleton<GetAvailableCamerasUseCase>(
+    () => GetAvailableCamerasUseCase(sl<CameraRepository>()),
+  );
+
+  sl.registerFactory<CameraStore>(
+    () => CameraStore(sl<GetAvailableCamerasUseCase>()),
+  );
+  sl.registerLazySingleton<SavePhotoToGalleryUseCase>(
+    () => SavePhotoToGalleryUseCase(sl<CameraRepository>()),
+  );
+
+  sl.registerFactory<CapturedPhotoStore>(
+    () => CapturedPhotoStore(sl<SavePhotoToGalleryUseCase>()),
   );
 }

@@ -4,6 +4,9 @@ import 'package:pose_match/app/navigation/main_shell_page.dart';
 import 'package:pose_match/app/navigation/main_shell_scope.dart';
 import 'package:pose_match/app/router/app_routes.dart';
 import 'package:pose_match/app/router/app_transitions.dart';
+import 'package:pose_match/features/camera/data/models/camera_overlay_data.dart';
+import 'package:pose_match/features/camera/presentation/pages/camera_page.dart';
+import 'package:pose_match/features/camera/presentation/pages/captured_photo_page.dart';
 import 'package:pose_match/features/favorites/presentation/pages/favorites_page.dart';
 import 'package:pose_match/features/home/presentation/pages/home_page.dart';
 import 'package:pose_match/features/onboarding/presentation/pages/onboarding_page.dart';
@@ -111,12 +114,74 @@ abstract final class AppRouter {
             throw StateError('PoseDetail için gerekli veri bulunamadı.');
           }
 
-          return AppTransitions.fadeScale(
+          return AppTransitions.poseDetail(
             state: state,
             child: ChangeNotifierProvider<PoseStore>.value(
               value: poseStore,
               child: PoseDetailPage(poseId: poseId),
             ),
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.camera,
+        pageBuilder: (context, state) {
+          final initialOverlay = state.extra as CameraOverlayData?;
+
+          return CustomTransitionPage<void>(
+            key: state.pageKey,
+            transitionDuration: const Duration(milliseconds: 320),
+            reverseTransitionDuration: const Duration(milliseconds: 280),
+            child: CameraPage(initialOverlay: initialOverlay),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  final curvedAnimation = CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutCubic,
+                    reverseCurve: Curves.easeInCubic,
+                  );
+
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 1),
+                      end: Offset.zero,
+                    ).animate(curvedAnimation),
+                    child: child,
+                  );
+                },
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.capturedPhoto,
+        pageBuilder: (context, state) {
+          final photoPath = state.extra! as String;
+
+          return CustomTransitionPage<void>(
+            key: state.pageKey,
+
+            transitionDuration: const Duration(milliseconds: 280),
+
+            reverseTransitionDuration: const Duration(milliseconds: 240),
+
+            child: CapturedPhotoPage(photoPath: photoPath),
+
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+                  final curvedAnimation = CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutCubic,
+                    reverseCurve: Curves.easeInCubic,
+                  );
+
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 1),
+                      end: Offset.zero,
+                    ).animate(curvedAnimation),
+                    child: child,
+                  );
+                },
           );
         },
       ),
@@ -133,7 +198,7 @@ class _AnimatedBranchContainer extends StatelessWidget {
   final int currentIndex;
   final List<Widget> children;
 
-  static const Duration _duration = Duration(milliseconds: 220);
+  static const Duration _duration = Duration(milliseconds: 130);
 
   @override
   Widget build(BuildContext context) {
@@ -146,9 +211,9 @@ class _AnimatedBranchContainer extends StatelessWidget {
           child: AnimatedOpacity(
             opacity: isActive ? 1 : 0,
             duration: _duration,
-            curve: Curves.easeOut,
-            child: AnimatedScale(
-              scale: isActive ? 1 : 0.985,
+            curve: Curves.easeOutCubic,
+            child: AnimatedSlide(
+              offset: isActive ? Offset.zero : const Offset(0.00, 0),
               duration: _duration,
               curve: Curves.easeOutCubic,
               child: TickerMode(enabled: isActive, child: children[index]),

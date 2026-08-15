@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pose_match/app/router/app_routes.dart';
+import 'package:pose_match/app/theme/app_colors.dart';
 import 'package:pose_match/core/constants/app_texts.dart';
 
 class AppBottomNavigation extends StatelessWidget {
@@ -11,7 +14,7 @@ class AppBottomNavigation extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onDestinationSelected;
 
-  static const double _height = 74;
+  static const double _height = 70;
   static const double _centerButtonSpace = 84;
   static const double _notchMargin = 5;
   static const double _borderRadius = 22;
@@ -47,49 +50,58 @@ class AppBottomNavigation extends StatelessWidget {
 
     return SafeArea(
       top: false,
-      minimum: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(_borderRadius),
-        child: BottomAppBar(
-          height: _height,
-          color: const Color.fromARGB(255, 246, 249, 255),
-          elevation: 15,
-          shadowColor: colorScheme.shadow.withValues(alpha: 0.18),
-          notchMargin: _notchMargin,
-          clipBehavior: Clip.antiAlias,
-          shape: const CircularNotchedRectangle(),
-          child: Row(
-            children: [
-              Expanded(
-                child: _NavigationButton(
-                  item: _items[0],
-                  isSelected: currentIndex == 0,
-                  onTap: () => onDestinationSelected(0),
+      minimum: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(_borderRadius),
+          border: Border.all(
+            color: colorScheme.primary.withValues(alpha: 0.45),
+            width: 1,
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(_borderRadius),
+          child: BottomAppBar(
+            height: _height,
+            color: AppColors.background,
+            elevation: 15,
+            shadowColor: colorScheme.shadow.withValues(alpha: 0.18),
+            notchMargin: _notchMargin,
+            clipBehavior: Clip.antiAlias,
+            shape: const CircularNotchedRectangle(),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _NavigationButton(
+                    item: _items[0],
+                    isSelected: currentIndex == 0,
+                    onTap: () => onDestinationSelected(0),
+                  ),
                 ),
-              ),
-              Expanded(
-                child: _NavigationButton(
-                  item: _items[1],
-                  isSelected: currentIndex == 1,
-                  onTap: () => onDestinationSelected(1),
+                Expanded(
+                  child: _NavigationButton(
+                    item: _items[1],
+                    isSelected: currentIndex == 1,
+                    onTap: () => onDestinationSelected(1),
+                  ),
                 ),
-              ),
-              const SizedBox(width: _centerButtonSpace),
-              Expanded(
-                child: _NavigationButton(
-                  item: _items[2],
-                  isSelected: currentIndex == 2,
-                  onTap: () => onDestinationSelected(2),
+                const SizedBox(width: _centerButtonSpace),
+                Expanded(
+                  child: _NavigationButton(
+                    item: _items[2],
+                    isSelected: currentIndex == 2,
+                    onTap: () => onDestinationSelected(2),
+                  ),
                 ),
-              ),
-              Expanded(
-                child: _NavigationButton(
-                  item: _items[3],
-                  isSelected: currentIndex == 3,
-                  onTap: () => onDestinationSelected(3),
+                Expanded(
+                  child: _NavigationButton(
+                    item: _items[3],
+                    isSelected: currentIndex == 3,
+                    onTap: () => onDestinationSelected(3),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -109,7 +121,7 @@ class AppCameraButton extends StatelessWidget {
       dimension: AppBottomNavigation._cameraButtonSize,
       child: FloatingActionButton(
         heroTag: 'camera_button',
-        onPressed: onPressed,
+        onPressed: () => context.push(AppRoutes.camera),
         tooltip: AppTexts.addPose,
         elevation: 10,
         highlightElevation: 5,
@@ -133,7 +145,7 @@ class _NavigationButton extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  static const Duration _animationDuration = Duration(milliseconds: 250);
+  static const Duration _animationDuration = Duration(milliseconds: 300);
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +183,7 @@ class _NavigationButton extends StatelessWidget {
               child: AnimatedScale(
                 duration: _animationDuration,
                 curve: Curves.easeOutBack,
-                scale: isSelected ? 1.08 : 1,
+                scale: isSelected ? 1.06 : 1,
                 child: Icon(
                   isSelected ? item.selectedIcon : item.icon,
                   size: AppBottomNavigation._iconSize,

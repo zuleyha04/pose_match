@@ -51,11 +51,13 @@ class _AddPoseCardState extends State<AddPoseCard> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
         decoration: BoxDecoration(
-          color: _isPressed ? AppColors.primary : AppColors.background,
+          color: _isPressed
+              ? const Color.fromARGB(255, 12, 12, 12)
+              : AppColors.background,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: _isPressed
-                ? AppColors.primary.withValues(alpha: 0.55)
+                ? const Color.fromARGB(255, 4, 4, 3).withValues(alpha: 0.55)
                 : AppColors.primary.withValues(alpha: 0.25),
             width: _isPressed ? 1.4 : 1,
           ),
@@ -71,7 +73,7 @@ class _AddPoseCardState extends State<AddPoseCard> {
                     dimension: 22,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: AppColors.primary,
+                      color: Color.fromARGB(255, 8, 8, 7),
                     ),
                   )
                 : const _ChevronIcon(),
@@ -91,9 +93,11 @@ class _AddPoseThumbnail extends StatelessWidget {
       width: 58,
       height: 58,
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 245, 190, 25).withValues(alpha: 1),
+        color: const Color.fromARGB(255, 13, 13, 11).withValues(alpha: 1),
         borderRadius: BorderRadius.circular(19),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 1)),
+        border: Border.all(
+          color: const Color.fromARGB(255, 19, 19, 19).withValues(alpha: 1),
+        ),
       ),
       child: const Center(
         child: Icon(Icons.add_a_photo, size: 27, color: AppColors.white),
@@ -146,7 +150,7 @@ class _ChevronIcon extends StatelessWidget {
     return Icon(
       Icons.chevron_right_rounded,
       size: 26,
-      color: AppColors.primary.withValues(alpha: 1),
+      color: const Color.fromARGB(255, 11, 10, 9).withValues(alpha: 1),
     );
   }
 }

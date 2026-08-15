@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pose_match/app/router/app_routes.dart';
 import 'package:pose_match/core/constants/app_constants.dart';
+import 'package:pose_match/features/poses/presentation/widgets/pose_grid.dart';
 import 'package:provider/provider.dart';
 import 'package:pose_match/app/theme/app_colors.dart';
 import 'package:pose_match/core/constants/app_texts.dart';
 import 'package:pose_match/features/poses/domain/entities/pose.dart';
 import 'package:pose_match/features/poses/presentation/stores/pose_store.dart';
-import 'package:pose_match/features/poses/presentation/widgets/pose_card.dart';
 
 class PosesPage extends StatelessWidget {
   const PosesPage({super.key});
@@ -82,34 +82,8 @@ class _PosesContent extends StatelessWidget {
           return const _EmptyState();
         }
 
-        return _PosesGrid(poses: poses, onPoseTap: onPoseTap);
+        return PoseGrid(poses: poses, onPoseTap: onPoseTap);
     }
-  }
-}
-
-class _PosesGrid extends StatelessWidget {
-  const _PosesGrid({required this.poses, required this.onPoseTap});
-
-  final List<Pose> poses;
-  final ValueChanged<Pose> onPoseTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-      itemCount: poses.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 3 / 4,
-      ),
-      itemBuilder: (context, index) {
-        final pose = poses[index];
-
-        return PoseCard(pose: pose, onTap: () => onPoseTap(pose));
-      },
-    );
   }
 }
 

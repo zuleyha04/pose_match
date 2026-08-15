@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pose_match/app/router/app_routes.dart';
 import 'package:pose_match/core/constants/app_constants.dart';
 import 'package:pose_match/core/constants/app_durations.dart';
@@ -24,7 +25,6 @@ class _SplashPageState extends State<SplashPage>
   late final Animation<double> _logoScale;
   late final Animation<double> _sloganOpacity;
   late final Animation<Offset> _sloganPosition;
-  late final Animation<double> _loaderOpacity;
 
   @override
   void initState() {
@@ -59,11 +59,6 @@ class _SplashPageState extends State<SplashPage>
             curve: const Interval(0.30, 0.75, curve: Curves.easeOutCubic),
           ),
         );
-
-    _loaderOpacity = CurvedAnimation(
-      parent: _animationController,
-      curve: const Interval(0.65, 1.0, curve: Curves.easeOut),
-    );
 
     _startSplashFlow();
   }
@@ -130,12 +125,13 @@ class _SplashPageState extends State<SplashPage>
                 ),
                 const SizedBox(height: AppSizes.spacing64),
                 FadeTransition(
-                  opacity: _loaderOpacity,
-                  child: SizedBox.square(
-                    dimension: AppSizes.loaderSize,
-                    child: CircularProgressIndicator(
-                      strokeWidth: AppSizes.loaderStrokeWidth,
-                      color: colorScheme.onPrimary,
+                  opacity: _sloganOpacity,
+                  child: SlideTransition(
+                    position: _sloganPosition,
+                    child: Lottie.asset(
+                      AppConstants.loadingAnimationPath,
+                      width: sloganWidth,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

@@ -55,6 +55,10 @@ class PoseStore extends ChangeNotifier {
   String? get favoriteErrorMessage => _favoriteErrorMessage;
   String? get deleteErrorMessage => _deleteErrorMessage;
 
+  List<Pose> get favoritePoses {
+    return List.unmodifiable(_userPoses.where((pose) => pose.isFavorite));
+  }
+
   Future<void> loadRecommendedPoses() async {
     _recommendedStatus = PoseLoadStatus.loading;
     _recommendedErrorMessage = null;
@@ -165,6 +169,10 @@ class PoseStore extends ChangeNotifier {
   }
 
   Future<void> toggleFavorite(Pose pose) async {
+    if (pose.source != PoseSource.user) {
+      return;
+    }
+
     _favoriteStatus = PoseActionStatus.loading;
     _favoriteErrorMessage = null;
     notifyListeners();
@@ -176,12 +184,11 @@ class PoseStore extends ChangeNotifier {
         return item.id == updatedPose.id ? updatedPose : item;
       }).toList();
 
-      _recommendedPoses = _recommendedPoses.map((item) {
-        return item.id == updatedPose.id ? updatedPose : item;
-      }).toList();
-
       _favoriteStatus = PoseActionStatus.success;
-    } catch (_) {
+    } catch (error, stackTrace) {
+      debugPrint('FAVORİ GÜNCELLEME HATASI: $error');
+      debugPrintStack(stackTrace: stackTrace);
+
       _favoriteStatus = PoseActionStatus.error;
       _favoriteErrorMessage = 'Favori durumu güncellenemedi.';
     }
