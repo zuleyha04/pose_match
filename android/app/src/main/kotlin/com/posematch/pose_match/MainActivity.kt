@@ -1,4 +1,4 @@
-package com.posematch.pose_match
+package com.zuleyhaakbas.posematch
 
 import io.flutter.embedding.android.FlutterActivity
 

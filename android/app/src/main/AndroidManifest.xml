@@ -6,7 +6,7 @@
         android:maxSdkVersion="28"
         tools:replace="android:maxSdkVersion" />
     <application
-        android:label="pose_match"
+        android:label="PoseMatch"
         android:name="${applicationName}"
         android:icon="@mipmap/pose_match_icon"
         android:roundIcon="@mipmap/pose_match_icon_round"

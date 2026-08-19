@@ -145,14 +145,12 @@ class _EmptyState extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              width: 180,
-              height: 180,
-              child: ClipOval(
-                child: Lottie.asset(
-                  AppConstants.emptyPosesAnimationPath,
-                  fit: BoxFit.cover,
-                  repeat: true,
-                ),
+              width: 80,
+              height: 80,
+              child: Lottie.asset(
+                AppConstants.emptyPosesAnimationPath,
+                fit: BoxFit.cover,
+                repeat: true,
               ),
             ),
             const SizedBox(height: 16),

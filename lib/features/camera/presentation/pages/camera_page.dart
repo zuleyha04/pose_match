@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -145,14 +144,20 @@ class _CameraContent extends StatelessWidget {
       case CameraStatus.initial:
       case CameraStatus.initializing:
       case CameraStatus.switching:
-        return const _CameraLoading();
+        return _CameraLoading(
+          overlay: cameraStore.overlay,
+          opacity: cameraStore.overlayOpacity,
+        );
 
       case CameraStatus.ready:
       case CameraStatus.capturing:
         final controller = cameraStore.controller;
 
         if (controller == null || !controller.value.isInitialized) {
-          return const _CameraLoading();
+          return _CameraLoading(
+            overlay: cameraStore.overlay,
+            opacity: cameraStore.overlayOpacity,
+          );
         }
 
         return _CameraPreview(controller: controller);
@@ -169,11 +174,44 @@ class _CameraContent extends StatelessWidget {
 }
 
 class _CameraLoading extends StatelessWidget {
-  const _CameraLoading();
+  const _CameraLoading({this.overlay, this.opacity = 0.5});
+
+  final CameraOverlayData? overlay;
+  final double opacity;
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator(color: Colors.white));
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        const ColoredBox(color: Colors.black),
+
+        if (overlay != null)
+          Opacity(
+            opacity: opacity,
+            child: switch (overlay!.source) {
+              CameraOverlaySource.asset => Image.asset(
+                overlay!.imagePath,
+                fit: BoxFit.contain,
+              ),
+              CameraOverlaySource.file => Image.file(
+                File(overlay!.imagePath),
+                fit: BoxFit.contain,
+              ),
+            },
+          ),
+
+        const Center(
+          child: SizedBox.square(
+            dimension: 34,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.5,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -305,40 +343,58 @@ class _CameraBottomControls extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.opacity_rounded, color: Colors.white, size: 20),
+          SizedBox(
+            height: 48,
+            child: IgnorePointer(
+              ignoring: !cameraStore.hasOverlay,
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOutCubic,
+                opacity: cameraStore.hasOverlay ? 1 : 0,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.opacity_rounded,
+                      color: Colors.white,
+                      size: 20,
+                    ),
 
-              const SizedBox(width: 12),
+                    const SizedBox(width: 12),
 
-              Expanded(
-                child: Slider(
-                  value: cameraStore.overlayOpacity,
-                  min: 0,
-                  max: 1,
-                  onChanged: cameraStore.hasOverlay
-                      ? cameraStore.setOverlayOpacity
-                      : null,
+                    Expanded(
+                      child: SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          activeTrackColor: Colors.white,
+                          inactiveTrackColor: Colors.black,
+                          thumbColor: Colors.white,
+                        ),
+                        child: Slider(
+                          value: cameraStore.overlayOpacity,
+                          min: 0,
+                          max: 1,
+                          onChanged: cameraStore.setOverlayOpacity,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 42,
+                      child: Text(
+                        '${(cameraStore.overlayOpacity * 100).round()}%',
+                        textAlign: TextAlign.end,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
-              SizedBox(
-                width: 42,
-                child: Text(
-                  '${(cameraStore.overlayOpacity * 100).round()}%',
-                  textAlign: TextAlign.end,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-
           const SizedBox(height: 12),
-
           const _ShutterButton(),
         ],
       ),

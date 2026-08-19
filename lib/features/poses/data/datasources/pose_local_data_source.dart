@@ -48,11 +48,6 @@ class PoseLocalDataSource {
         source: PoseSource.recommended,
       ),
       PoseModel(
-        id: 'recommended_8',
-        imagePath: AppConstants.recommendedPose8Path,
-        source: PoseSource.recommended,
-      ),
-      PoseModel(
         id: 'recommended_9',
         imagePath: AppConstants.recommendedPose9Path,
         source: PoseSource.recommended,

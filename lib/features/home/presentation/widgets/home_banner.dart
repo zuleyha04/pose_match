@@ -131,19 +131,22 @@ class _BannerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: AppColors.primary.withValues(alpha: 0.25),
+          color: Colors.black.withValues(alpha: 0.25),
           width: 1,
         ),
       ),
-      child: Image.asset(
-        imageSource,
-        width: double.infinity,
-        height: double.infinity,
-        fit: BoxFit.cover,
+      padding: const EdgeInsets.all(1.5),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18.5),
+        child: Image.asset(
+          imageSource,
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

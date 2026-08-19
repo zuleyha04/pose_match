@@ -37,13 +37,13 @@ class _SplashPageState extends State<SplashPage>
 
     _logoOpacity = CurvedAnimation(
       parent: _animationController,
-      curve: const Interval(0.0, 0.45, curve: Curves.easeOut),
+      curve: const Interval(0.0, 0.55, curve: Curves.easeOut),
     );
 
     _logoScale = Tween<double>(begin: 0.92, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.0, 0.50, curve: Curves.easeOutCubic),
+        curve: const Interval(0.0, 0.90, curve: Curves.easeOutCubic),
       ),
     );
 
@@ -86,59 +86,74 @@ class _SplashPageState extends State<SplashPage>
 
     return AppPage(
       backgroundColor: colorScheme.primary,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final double logoWidth = (constraints.maxWidth * 0.55)
-              .clamp(170.0, 220.0)
-              .toDouble();
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final double logoWidth = (constraints.maxWidth * 0.55)
+                .clamp(170.0, 220.0)
+                .toDouble();
 
-          final double sloganWidth = (constraints.maxWidth * 0.90)
-              .clamp(240.0, 340.0)
-              .toDouble();
+            final double sloganWidth = (constraints.maxWidth * 0.90)
+                .clamp(240.0, 340.0)
+                .toDouble();
 
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            final double loadingWidth = (constraints.maxWidth * 0.75)
+                .clamp(220.0, 360.0)
+                .toDouble();
+
+            return Stack(
+              fit: StackFit.expand,
               children: [
-                FadeTransition(
-                  opacity: _logoOpacity,
-                  child: ScaleTransition(
-                    scale: _logoScale,
-                    child: SvgPicture.asset(
-                      AppConstants.logo,
-                      width: logoWidth,
-                      fit: BoxFit.contain,
-                    ),
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      FadeTransition(
+                        opacity: _logoOpacity,
+                        child: ScaleTransition(
+                          scale: _logoScale,
+                          child: SvgPicture.asset(
+                            AppConstants.logo,
+                            width: logoWidth,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: AppSizes.spacing12),
+                      FadeTransition(
+                        opacity: _sloganOpacity,
+                        child: SlideTransition(
+                          position: _sloganPosition,
+                          child: SvgPicture.asset(
+                            AppConstants.slogan,
+                            width: sloganWidth,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: AppSizes.spacing12),
-                FadeTransition(
-                  opacity: _sloganOpacity,
-                  child: SlideTransition(
-                    position: _sloganPosition,
-                    child: SvgPicture.asset(
-                      AppConstants.slogan,
-                      width: sloganWidth,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: AppSizes.spacing64),
-                FadeTransition(
-                  opacity: _sloganOpacity,
-                  child: SlideTransition(
-                    position: _sloganPosition,
-                    child: Lottie.asset(
-                      AppConstants.loadingAnimationPath,
-                      width: sloganWidth,
-                      fit: BoxFit.contain,
+
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: AppSizes.spacing24,
+                  child: Center(
+                    child: FadeTransition(
+                      opacity: _sloganOpacity,
+                      child: Lottie.asset(
+                        AppConstants.loadingAnimationPath,
+                        width: loadingWidth,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ),
               ],
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

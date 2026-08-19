@@ -15,9 +15,9 @@ abstract final class AppConstants {
       'assets/images/onboarding/image3.png';
 
   //todo:banner path leri düzeltilecek
-  static const String banner1Path = 'assets/images/reklam.png';
-  static const String banner2Path = 'assets/images/reklam.png';
-  static const String banner3Path = 'assets/images/reklam.png';
+  static const String banner1Path = 'assets/images/banner/1.png';
+  static const String banner2Path = 'assets/images/banner/2.png';
+  static const String banner3Path = 'assets/images/banner/3.png';
 
   static const List<String> homeBannerPaths = [
     banner1Path,
@@ -52,8 +52,7 @@ abstract final class AppConstants {
       'assets/images/recommend/pose12.jpg';
 
   //animations
-  static const String emptyPosesAnimationPath =
-      'assets/animations/lottie_animation.json';
+  static const String emptyPosesAnimationPath = 'assets/animations/photo.json';
   static const String emptyFavoritesAnimationPath =
       'assets/animations/favorite.json';
   static const String loadingAnimationPath = 'assets/animations/loading.json';

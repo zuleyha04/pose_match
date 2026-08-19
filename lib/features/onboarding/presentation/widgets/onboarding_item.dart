@@ -13,57 +13,55 @@ class OnboardingItem extends StatelessWidget {
   final String title;
   final String description;
 
-  static const double _maximumImageWidth = 320;
-  static const double _maximumImageHeight = 300;
+  static const double _imageBorderRadius = 24;
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return SingleChildScrollView(
-      physics: const ClampingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(vertical: AppSizes.spacing12),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSizes.spacing16),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: _maximumImageWidth,
-              maxHeight: _maximumImageHeight,
-            ),
-            child: Image.asset(
-              imagePath,
-              width: double.infinity,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return const SizedBox(
-                  height: _maximumImageHeight,
-                  child: Center(
-                    child: Icon(Icons.image_not_supported_outlined, size: 55),
-                  ),
-                );
-              },
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(_imageBorderRadius),
+              child: SizedBox(
+                width: double.infinity,
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                ),
+              ),
             ),
           ),
-          const SizedBox(height: AppSizes.spacing32),
+
+          const SizedBox(height: AppSizes.spacing16),
+
           Text(
             title,
             textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: textTheme.headlineSmall?.copyWith(
+            style: textTheme.titleLarge?.copyWith(
               color: colorScheme.onSurface,
               fontWeight: FontWeight.w700,
+              height: 1.15,
             ),
           ),
-          const SizedBox(height: AppSizes.spacing12),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: textTheme.bodyLarge?.copyWith(
-              color: colorScheme.onSurfaceVariant,
-              height: 1.5,
+
+          const SizedBox(height: AppSizes.spacing8),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              description,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+                height: 1.35,
+              ),
             ),
           ),
         ],

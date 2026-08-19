@@ -8,15 +8,20 @@ abstract final class AppTexts {
   static const String next = 'İleri';
   static const String start = 'Başla';
 
-  static const String onboardingSelectPoseTitle = 'Referans Pozunu Seç';
+  static const String onboardingSelectPoseTitle = 'Pozunu Seç';
+
   static const String onboardingSelectPoseDescription =
-      'Galerinden beğendiğin poz fotoğrafını seç ve çekim için hazırla.';
-  static const String onboardingAlignPoseTitle = 'Pozla Hizalan';
+      'Beğendiğin kareyi referans al, gerisini PoseMatch ile kolaylaştır.';
+
+  static const String onboardingAlignPoseTitle = 'Aynı Kareyi Yakala';
+
   static const String onboardingAlignPoseDescription =
-      'Referans görseli kamera üzerinde yarı saydam olarak gör ve pozunu kolayca eşleştir.';
-  static const String onboardingCapturePhotoTitle = 'Kaydet ve Paylaş';
+      'Referansını ekranda gör, açını ve pozunu kolayca eşleştir.';
+
+  static const String onboardingCapturePhotoTitle = 'Kare Artık Senin !';
+
   static const String onboardingCapturePhotoDescription =
-      'Fotoğrafını çek, cihazına kaydet ve dilediğin yerde kolayca paylaş.';
+      'En iyi çekimini kaydet, istersen tek dokunuşla paylaş.';
 
   //NAVBAR
   static const String home = 'Ana Sayfa';
@@ -48,7 +53,7 @@ abstract final class AppTexts {
   static const String poseNotFound = 'Poz bulunamadı.';
 
   //favorites
-  static const String emptyFavoritesTitle = 'Henüz favori pozun yok';
+  static const String emptyFavoritesTitle = 'Henüz favori pozun yok.';
 
   static const String emptyFavoritesDescription =
       'Beğendiğin pozları favorilerine ekleyerek burada görebilirsin.';
@@ -63,15 +68,21 @@ abstract final class AppTexts {
   static const String termsOfUse = 'Kullanım Koşulları';
 
   static const String aboutPoseMatchDescription =
-      'PoseMatch, seçtiğin referans pozu kullanarak benzer bir pozu daha kolay yakalamanı sağlayan bir fotoğraf çekim yardımcısıdır. Referans görselini seçebilir, kamera üzerinde hizalanabilir ve çektiğin fotoğrafı kaydedebilirsin.\n\n'
+      'PoseMatch, beğendiğin bir pozu veya fotoğraf kompozisyonunu kendi karenle yeniden oluşturmanı kolaylaştıran bir kamera yardımcısıdır.\n\n'
+      'Galerinden bir referans görsel seçebilir, bu görseli kamera ekranında kılavuz olarak kullanarak pozunu ve kadrajını hizalayabilir, ardından fotoğrafını çekip cihazına kaydedebilirsin.\n\n'
+      'PoseMatch, doğru açıyı ve kompozisyonu daha kolay yakalayabilmen için sade ve pratik bir çekim deneyimi sunar.\n\n'
       'Uygulama: PoseMatch\n'
       'Sürüm: 1.0.0';
 
   static const String privacyPolicyDescription =
-      'PoseMatch, temel işlevlerini cihaz üzerinde çalıştıracak şekilde tasarlanmıştır. Seçtiğin fotoğraflar ve oluşturduğun pozlar uygulamanın çalışması için cihazında kullanılabilir.';
+      'PoseMatch, gizliliğinizi ön planda tutacak şekilde tasarlanmıştır.\n\n'
+      'Kamera ve galeri erişimi yalnızca uygulamanın temel özelliklerini sunabilmek amacıyla kullanılır. Seçtiğiniz referans görseller ve çektiğiniz fotoğraflar, ilgili işlemlerin gerçekleştirilebilmesi için cihazınız üzerinde işlenebilir.\n\n'
+      'PoseMatch, kullanıcıların kişisel fotoğraflarını izinsiz olarak paylaşmaz veya üçüncü taraflara aktarmaz.';
 
   static const String termsOfUseDescription =
-      'PoseMatch kullanılarak seçilen, oluşturulan veya paylaşılan içeriklerin kullanımından kullanıcı sorumludur. Uygulamayı kullanırken üçüncü kişilerin haklarına ve yürürlükteki kurallara uygun hareket edilmelidir.';
+      'PoseMatch’i kullanarak uygulamanın kullanım koşullarını kabul etmiş olursunuz.\n\n'
+      'Uygulama aracılığıyla seçilen, oluşturulan, kaydedilen veya paylaşılan içeriklerden kullanıcı sorumludur. Kullanıcıların; telif hakları, kişilik hakları, gizlilik hakları ve diğer üçüncü taraf haklarına saygı göstermesi gerekir.\n\n'
+      'PoseMatch, hukuka aykırı veya üçüncü kişilerin haklarını ihlal eden amaçlarla kullanılmamalıdır.';
 
   static const String appVersion = 'Sürüm 1.0.0';
 

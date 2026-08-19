@@ -83,7 +83,7 @@ class HomePoseSection extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: poses.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              separatorBuilder: (_, _) => const SizedBox(width: 12),
               itemBuilder: (context, index) {
                 final pose = poses[index];
 
@@ -180,7 +180,7 @@ class _EmptyPoseState extends StatelessWidget {
       child: Column(
         children: [
           Icon(
-            Icons.photo_library_outlined,
+            Icons.hide_image,
             size: 30,
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
